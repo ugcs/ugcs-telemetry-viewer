@@ -45,7 +45,7 @@ Resize the main window to change column count.
 |---|---|---|
 | ![One column layout](assets/layout-1c.png) | ![One column layout](assets/layout-2c.png) | ![One column layout](assets/layout-3c.png) |
 
-### How do I build on CI? ###
+### How do I build? ###
 
 * Prerequisites: [.Net Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 * To build the solution execute `dotnet build /p:Configuration=Release;Version=<version>;FileVersion=<version>;AssemblyVersion=<version>` from `/src/` directory. Where `<version>` should be replaced with the actual build version.
