@@ -1,0 +1,83 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views"
+        xmlns:helpers="clr-namespace:UGCS.TelemetryViewer.Helpers"
+        Width="360"
+        Height="454"
+        x:Class="UGCS.TelemetryViewer.Views.HostWindow"
+        Title="Host Dialog" Background="#1c2226"
+        HasSystemDecorations="false"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+  <Window.Resources>
+    <helpers:StringToIntConverter x:Key="intConverter"/>
+  </Window.Resources>
+  <Window.Styles>
+    <Style Selector="Button.Login:pressed /template/ ContentPresenter">
+      <Setter Property="Opacity" Value="0.5"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+  </Window.Styles>
+    <Panel>
+      <Button VerticalAlignment="Top" HorizontalAlignment="Right"
+              Margin="8" Width="24" Height="24"
+              Padding="0"
+              Background="Transparent" BorderThickness="0"
+              Click="Close">
+        <Image Source="avares://telemetry-viewer/Assets/close-cross.png"/>
+      </Button>
+      <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                  VerticalAlignment="Center" Spacing="25">
+        <Image Source="avares://telemetry-viewer/Assets/ugcs-logo-title.png"
+               Margin="5" Width="150" Height="60"/>
+
+        <TextBlock Text="{Binding Message}"
+                   TextWrapping="Wrap"
+                   Foreground="WhiteSmoke"
+                   FontFamily="Roboto"
+                   FontSize="14"/>
+
+        <TextBlock HorizontalAlignment="Left" 
+                   VerticalAlignment="Center" 
+                   TextWrapping="Wrap" 
+                   Foreground="WhiteSmoke"
+                   Text="{Binding DetailMessage}"
+                   Height="36"
+                   Width="280"/>
+
+        <views:StyledTextBox Width="280" Height="55"
+                             ContentFontSize="16"
+                             TooltipFontSize="10"
+                             ContentForeground="WhiteSmoke"
+                             TooltipText="Host"
+                             TooltipForeground="#818e99"
+                             ContentLeftPadding="15"
+                             Text="{Binding Host}"
+                             EnterPressed="TryCloseWithResult"/>
+        <views:StyledTextBox Width="280" Height="55"
+                             ContentFontSize="16"
+                             TooltipFontSize="10" 
+                             ContentForeground="WhiteSmoke"
+                             TooltipText="Port"
+                             TooltipForeground="#818e99"
+                             ContentLeftPadding="15"
+                             Text="{Binding Port, Converter={StaticResource intConverter}}"
+                             EnterPressed="TryCloseWithResult"/>
+        <Button Background="Transparent"
+                BorderThickness="0" Click="TryCloseWithResult"
+                Classes="Login">
+          <Border BorderThickness="0" BorderBrush="Transparent"
+                  CornerRadius="6" Background="#83cc2f"
+                  Width="280" Height="50">
+            <TextBlock Text="Login" Foreground="#262d33"
+                       FontSize="18"
+                       FontFamily="Roboto"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+          </Border>
+        </Button>
+      </StackPanel>
+    </Panel>
+</Window>

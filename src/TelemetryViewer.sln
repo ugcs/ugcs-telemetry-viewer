@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelemetryViewer", "TelemetryViewer\TelemetryViewer.csproj", "{F56433D7-1885-4677-B2A5-3E69522F04CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscoveryService", "DiscoveryService\DiscoveryService.csproj", "{36BC8A6E-A271-4258-BB03-CD86380D8188}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UcsService", "UcsService\UcsService.csproj", "{04CF224C-5B61-44DF-9812-7E013D60EE08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{33FDDCA8-BD0E-426E-A3B5-085D9F447E0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F56433D7-1885-4677-B2A5-3E69522F04CD}.Debug|x64.ActiveCfg = Debug|x64
+		{F56433D7-1885-4677-B2A5-3E69522F04CD}.Debug|x64.Build.0 = Debug|x64
+		{F56433D7-1885-4677-B2A5-3E69522F04CD}.Release|x64.ActiveCfg = Release|x64
+		{F56433D7-1885-4677-B2A5-3E69522F04CD}.Release|x64.Build.0 = Release|x64
+		{36BC8A6E-A271-4258-BB03-CD86380D8188}.Debug|x64.ActiveCfg = Debug|x64
+		{36BC8A6E-A271-4258-BB03-CD86380D8188}.Debug|x64.Build.0 = Debug|x64
+		{36BC8A6E-A271-4258-BB03-CD86380D8188}.Release|x64.ActiveCfg = Release|x64
+		{36BC8A6E-A271-4258-BB03-CD86380D8188}.Release|x64.Build.0 = Release|x64
+		{04CF224C-5B61-44DF-9812-7E013D60EE08}.Debug|x64.ActiveCfg = Debug|x64
+		{04CF224C-5B61-44DF-9812-7E013D60EE08}.Debug|x64.Build.0 = Debug|x64
+		{04CF224C-5B61-44DF-9812-7E013D60EE08}.Release|x64.ActiveCfg = Release|x64
+		{04CF224C-5B61-44DF-9812-7E013D60EE08}.Release|x64.Build.0 = Release|x64
+		{33FDDCA8-BD0E-426E-A3B5-085D9F447E0D}.Debug|x64.ActiveCfg = Debug|x64
+		{33FDDCA8-BD0E-426E-A3B5-085D9F447E0D}.Release|x64.ActiveCfg = Release|x64
+		{33FDDCA8-BD0E-426E-A3B5-085D9F447E0D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5261564-2E9E-4CA3-8B83-178757C982FA}
+	EndGlobalSection
+EndGlobal

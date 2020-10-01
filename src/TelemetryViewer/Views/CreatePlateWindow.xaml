@@ -1,0 +1,84 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        HasSystemDecorations="false"
+        CanResize="False"
+        Width="440"
+        Height="590"
+        WindowStartupLocation="CenterScreen"
+        x:Class="UGCS.TelemetryViewer.Views.CreatePlateWindow"
+        Title="CreatePlateWindow"
+        Background="#12171a"
+        xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views">
+  <Window.Styles>
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="Button#CancelBtn Border">
+      <Setter Property="Background" Value="#262d33"/>
+    </Style>
+    <Style Selector="Button#CancelBtn:pointerover Border">
+      <Setter Property="Background" Value="#4d5a66"/>
+    </Style>
+    <Style Selector="Button#CancelBtn:pressed Border">
+      <Setter Property="Opacity" Value="0.5"/>
+    </Style>
+
+    <Style Selector="Button#ApplyBtn Border">
+      <Setter Property="Background" Value="#76b82a"/>
+    </Style>
+    <Style Selector="Button#ApplyBtn:pointerover Border">
+      <Setter Property="Background" Value="#83cc2f"/>
+    </Style>
+    <Style Selector="Button#ApplyBtn:pressed Border">
+      <Setter Property="Opacity" Value="0.5"/>
+    </Style>
+    
+  </Window.Styles>
+  <Border BorderThickness="1" BorderBrush="#76b82a">
+    <StackPanel>
+      <Button VerticalAlignment="Top" HorizontalAlignment="Right"
+              Margin="8" Width="24" Height="24"
+              Padding="0"
+              Background="Transparent" BorderThickness="0"
+              Click="CloseWithoutResult">
+        <Image Source="avares://telemetry-viewer/Assets/close-cross.png"/>
+      </Button>
+      <views:TelemetryPlateSettings Margin="32" Name="PlateSettings"
+                                    EditingPlate="{Binding TelemetryPlate}"
+                                    IsValid="{Binding CorrectInput}"
+                                    TelemetryVariants="{Binding TelemetryVariants}"
+                                    />
+      <StackPanel Orientation="Horizontal" Spacing="14"
+                  HorizontalAlignment="Right"
+                  Margin="0,0,32,32">
+        <Button Width="97" Height="40" Background="Transparent"
+                BorderThickness="0" Padding="0"
+                Click="CloseWithoutResult"
+                Name="CancelBtn">
+          <Border CornerRadius="4"
+                  Width="97" Height="40">
+            <TextBlock Text="Cancel" FontSize="16"
+                       Foreground="#ffffff"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+          </Border>
+        </Button>
+        <Button Width="97" Height="40" Background="Transparent"
+                BorderThickness="0" Padding="0" Click="CloseWithResult"
+                IsEnabled="{Binding CorrectInput}"
+                Name="ApplyBtn">
+          <Border CornerRadius="4"
+                  Width="97" Height="40">
+            <TextBlock Text="Apply" FontSize="16"
+                       Foreground="#ffffff"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+          </Border>
+        </Button>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</Window>

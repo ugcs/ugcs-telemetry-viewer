@@ -1,0 +1,38 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UGCS.TelemetryViewer.Views.PopupMenu"
+             xmlns:helpers="clr-namespace:UGCS.TelemetryViewer.Helpers"
+             >
+  <UserControl.Styles>
+    <Style Selector="ToggleButton#OpenCloseBtn:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="ToggleButton#OpenCloseBtn:checked /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+  </UserControl.Styles>
+  <Panel>
+    <ToggleButton Name="OpenCloseBtn" Cursor="Hand" Background="Transparent"
+                  BorderThickness="0">
+      <Panel>
+        <Image Source="avares://telemetry-viewer/Assets/more-dots-hor-white.png"
+               IsVisible="{Binding !#OpenCloseBtn.IsChecked}"/>
+        <Image Source="avares://telemetry-viewer/Assets/more-dots-hor-green.png"
+               IsVisible="{Binding #OpenCloseBtn.IsChecked}"/>
+      </Panel>
+    </ToggleButton>
+    <Popup IsOpen="{Binding #OpenCloseBtn.IsChecked}"
+           PlacementMode="Bottom" Name="MenuPopup">
+      <StackPanel Orientation="Vertical" Name="MenuItemsStack"
+                  Background="#1d2226">
+        
+      </StackPanel>
+    </Popup>
+  </Panel>
+</UserControl>

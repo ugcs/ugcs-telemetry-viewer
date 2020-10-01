@@ -1,0 +1,13 @@
+<Project>
+  <!-- Here is the information, that is common for all assemblieis in the solution -->
+  <PropertyGroup>
+    <Product>UgCS Telemetry Viewer</Product>
+    <Company>SPH Engineering</Company>
+    <Authors>SPH Engineering</Authors>
+    <Copyright>Copyright &#169; 2020</Copyright>
+    <!-- Product version -->
+    <Version>2020.6</Version>
+    <AssemblyVersion>2020.6</AssemblyVersion>
+    <FileVersion>2020.6</FileVersion>
+  </PropertyGroup>
+</Project>

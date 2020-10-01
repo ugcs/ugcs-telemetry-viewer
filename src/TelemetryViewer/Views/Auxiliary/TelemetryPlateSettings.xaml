@@ -1,0 +1,55 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UGCS.TelemetryViewer.Views.TelemetryPlateSettings"
+             Background="#12171a"
+             xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views"
+             xmlns:helpers="clr-namespace:UGCS.TelemetryViewer.Helpers">
+  <StackPanel Spacing="25">
+    <views:StyledTextBox Height="55" Width="375"
+                         TooltipText="Caption (required)"
+                         TooltipForeground="#818e99"
+                         ContentForeground="#e6edf2"
+                         Name="CaptionBox"/>
+
+    <views:StyledSelectTextBox Height="55" Width="375"
+                               TooltipText="Telemetry (required)"
+                               TooltipForeground="#818e99"
+                               ContentForeground="#e6edf2"
+                               Name="TelemSelect"/>
+    
+    <views:StyledTextBox Height="55" Width="375"
+                         TooltipText="Units"
+                         TooltipForeground="#818e99"
+                         ContentForeground="#e6edf2"
+                         Name="UnitsBox"/>
+
+    <views:StyledTextBox Height="55" Width="375"
+                         TooltipText="Decimal places (0-7)"
+                         TooltipForeground="#818e99"
+                         ContentForeground="#e6edf2"
+                         Name="DecimalPlacesBox"/>
+
+    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+      <TextBlock Text="Thresholds" Foreground="#e6edf2"
+                 FontSize="16" Grid.Row="0" Grid.Column="0"
+                 Grid.ColumnSpan="2" Margin="0,10,0,10"/>
+      <views:StyledTextBox Height="55" Width="180"
+                           TooltipText="Min (number)"
+                           HorizontalAlignment="Left"
+                           TooltipForeground="#818e99"
+                           ContentForeground="#e6edf2"
+                           Grid.Row="1" Grid.Column="0"
+                           Name="MinThresholdBox"/>
+      <views:StyledTextBox Height="55" Width="180"
+                           TooltipText="Max (number)"
+                           HorizontalAlignment="Right"
+                           TooltipForeground="#818e99"
+                           ContentForeground="#e6edf2"
+                           Grid.Row="1" Grid.Column="1"
+                           Name="MaxThresholdBox"/>
+    </Grid>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,42 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UGCS.TelemetryViewer.Views.AddPlateControl">
+  
+  <UserControl.Styles>
+    <Style Selector="Button#AddBtn:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#676d73"/>
+    </Style>
+    <Style Selector="Button#AddBtn:pressed /template/ ContentPresenter">
+      <Setter Property="Opacity" Value="0.5"/>
+    </Style>
+  </UserControl.Styles>
+  
+  <Panel Width="200" Height="200" Cursor="Hand">
+    
+    <Button Background="#262d33" Name="AddBtn"
+            BorderThickness="0" Padding="0" IsHitTestVisible="{Binding #AddBtn.IsEnabled}">
+      <Panel>
+        
+        <Image Source="/Assets/plus-add.png"
+               Width="28"/>
+
+        <TextBlock Text="Add widget" FontSize="16"
+                   Foreground="#f5f9fc"
+                   Margin="0,70,0,0"/>
+        
+      </Panel>
+    </Button>
+
+    <!--Workaround for show tooltip. It can not be shown on disabled control-->
+    <TextBox Background="Transparent" BorderThickness="0" IsReadOnly="True"
+             Cursor="Arrow" CaretBrush="Transparent" IsHitTestVisible="{Binding !#AddBtn.IsEnabled}">
+      <ToolTip.Tip>
+        <TextBlock Text="Can't add new element" Foreground="WhiteSmoke"
+                   Name="DisableTip"/>
+      </ToolTip.Tip>
+    </TextBox>
+  </Panel>
+</UserControl>
