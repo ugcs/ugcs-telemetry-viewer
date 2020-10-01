@@ -1,0 +1,82 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:UGCS.TelemetryViewer.ViewModels;assembly=telemetry-viewer"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views"
+        mc:Ignorable="d"
+        Width="{Binding Width, Mode=TwoWay}"
+        Height="{Binding Height, Mode=TwoWay}"
+        x:Class="UGCS.TelemetryViewer.Views.MainWindow"
+        Icon="avares://telemetry-viewer/Assets/TelemetryViewer.ico"
+        Title="Telemetry Viewer"
+        Background="#13161a"
+        WindowStartupLocation="CenterScreen">
+  <Panel>
+    <Grid RowDefinitions="40,*" ColumnDefinitions="*">
+      <Panel>
+        <TextBox IsReadOnly="True" Background="Transparent"
+                 CaretBrush="Transparent" 
+                 Text="{Binding DroneName}"
+                 BorderThickness="0"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Foreground="#e6edf2"
+                 FontWeight="600" Margin="40,0,40,0"
+                 FontSize="20"/>
+      </Panel>
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    Margin="8,0,8,0"
+                    Grid.Column="0" Grid.Row="1"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch">
+        <views:TelemetryPlateContainer AddPlateCommand="{Binding CreatePlateCommand}"
+                                       Plates="{Binding TelemetryPlates}"
+                                       Spacing="4" 
+                                       DisableAddTooltip="The operation can not be executed while drone is disconnected"
+                                       IsAddEnabled="{Binding DroneConnected}"/>
+      </ScrollViewer>
+    </Grid>
+
+    <Panel HorizontalAlignment="Stretch"
+           VerticalAlignment="Stretch"
+           Background="#CC000000"
+           IsVisible="{Binding !UcsConnected}">
+      <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+        <Image Source="avares://telemetry-viewer/Assets/error.png"
+               Width="128" Height="102"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,32"/>
+        <TextBlock Text="The UCS connection lost"
+                   FontSize="24" Margin="0,0,0,8"
+                   FontWeight="600" Foreground="White"
+                   TextAlignment="Center" TextWrapping="Wrap"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Trying to reconnect..."
+                   FontSize="16" Foreground="White"
+                   TextAlignment="Center" TextWrapping="Wrap"
+                   HorizontalAlignment="Center"/>
+      </StackPanel>
+      <TextBlock Text="There is no connection with ucs server"/>
+    </Panel>
+    <Panel HorizontalAlignment="Stretch"
+           VerticalAlignment="Stretch"
+           Background="#CC000000"
+           IsVisible="{Binding !DroneSelected}">
+      <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                  VerticalAlignment="Top" Spacing="32" Margin="0,56,0,0">
+        <Image Source="avares://telemetry-viewer/Assets/drone.png"
+               HorizontalAlignment="Center"
+               Width="280"
+               Height="256"/>
+        <TextBlock Text="Please select drone in the UCS client"
+                   FontSize="24" Foreground="White"
+                   TextAlignment="Center"
+                   FontWeight="600" TextWrapping="Wrap"
+                   HorizontalAlignment="Center"/>
+      </StackPanel>
+    </Panel>
+  </Panel>
+</Window>

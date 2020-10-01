@@ -1,0 +1,59 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UGCS.TelemetryViewer.Views.StyledSelectTextBox">
+  <UserControl.Styles>
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+  </UserControl.Styles>
+  <Panel>
+    <Border BorderThickness="1" Name="ContourBorder"
+            Margin="0" CornerRadius="6">
+      <Grid ColumnDefinitions="Auto,*" Name="Grid">
+        <Image Name="Image" Grid.Column="0" Margin="0,0,8,0"/>
+        <Carousel Name="Carousel" Grid.Column="1">
+          <Button Cursor="Hand" HorizontalContentAlignment="Left"
+                  Background="Transparent" Margin="0"
+                  BorderThickness="0">
+            <TextBlock FontSize="16"
+                       FontFamily="Roboto" Name="Tooltip"/>
+          </Button>
+          <StackPanel Orientation="Vertical">
+            <TextBlock FontSize="12" Name="TopTooltip"
+                       FontFamily="Roboto"/>
+            <TextBox Name="ContentBox"
+                     FontSize="16"
+                     FontFamily="Roboto" BorderThickness="0"
+                     Background="Transparent" LostFocus="EditDone"/>
+          </StackPanel>
+        </Carousel>
+      </Grid>
+    </Border>
+    <Popup HorizontalAlignment="Stretch" Name="PopupList" StaysOpen="False"
+           PlacementMode="Bottom" PlacementTarget="{Binding #Grid}"
+           Width="{Binding $parent[1].Width}"
+           MaxHeight="400">
+      <Panel Background="#262d33">
+
+        <ListBox Background="Transparent" BorderThickness="0"
+                 Padding="0" Cursor="Hand" Name="VariantsList">
+          <ListBox.Styles>
+            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="#76b82a"/>
+            </Style>
+          </ListBox.Styles>
+
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding}" Margin="16,20,16,20" Foreground="#f5f9fc"
+                         FontSize="16"/>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Panel>
+    </Popup>
+  </Panel>
+</UserControl>

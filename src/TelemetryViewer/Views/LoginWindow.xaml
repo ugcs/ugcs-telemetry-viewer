@@ -1,0 +1,75 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views"
+        Width="360"
+        Height="414"
+        x:Class="UGCS.TelemetryViewer.Views.LoginWindow"
+        Title="Host Dialog" Background="#1c2226"
+        HasSystemDecorations="false"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+  <Window.Styles>
+    <Style Selector="Button.Login:pressed /template/ ContentPresenter">
+      <Setter Property="Opacity" Value="0.5"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+  </Window.Styles>
+  <Panel>
+    <Button VerticalAlignment="Top" HorizontalAlignment="Right"
+            Margin="8" Width="24" Height="24"
+            Padding="0"
+            Background="Transparent" BorderThickness="0"
+            Click="Close">
+      <Image Source="avares://telemetry-viewer/Assets/close-cross.png"/>
+    </Button>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                VerticalAlignment="Center" Spacing="25">
+      <Image Source="avares://telemetry-viewer/Assets/ugcs-logo-title.png"
+             Margin="5" Width="150" Height="60"/>
+
+      <TextBlock Text="{Binding Message}"
+                 TextWrapping="Wrap"
+                 Foreground="WhiteSmoke"
+                 FontFamily="Roboto"
+                 FontSize="14"/>
+
+      <views:StyledTextBox Width="280" Height="55"
+                           ContentFontSize="16"
+                           TooltipFontSize="10"
+                           ContentForeground="WhiteSmoke"
+                           TooltipText="Login"
+                           TooltipForeground="#818e99"
+                           ContentLeftPadding="15"
+                           ImageWidth="24"
+                           Image="avares://telemetry-viewer/Assets/login_img.png"
+                           Text="{Binding Login}"
+                           EnterPressed="TryCloseWithResult"/>
+      <views:StyledTextBox Width="280" Height="55"
+                           Image="avares://telemetry-viewer/Assets/pass_img.png"
+                           ImageWidth="24"
+                           PasswordChar="*"
+                           ContentFontSize="16"
+                           TooltipFontSize="10"
+                           ContentForeground="WhiteSmoke"
+                           TooltipText="Password"
+                           TooltipForeground="#818e99"
+                           ContentLeftPadding="15"
+                           Text="{Binding Password}"
+                           EnterPressed="TryCloseWithResult"/>
+      <Button Background="Transparent" Classes="Login"
+              BorderThickness="0" Click="TryCloseWithResult">
+        <Border BorderThickness="0" BorderBrush="Transparent"
+                CornerRadius="6" Background="#83cc2f"
+                Width="280" Height="50">
+          <TextBlock Text="Login" Foreground="#262d33"
+                     FontSize="18"
+                     FontFamily="Roboto"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+        </Border>
+      </Button>
+    </StackPanel>
+  </Panel>
+</Window>

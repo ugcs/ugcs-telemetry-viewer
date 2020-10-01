@@ -1,0 +1,28 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="440" Height="600"
+        x:Class="UGCS.TelemetryViewer.Views.InitializingSplashWindow"
+        Title="Telemetry Viewer"
+        HasSystemDecorations="false"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+  <Panel>
+    <Image Source="avares://telemetry-viewer/Assets/splash-background.png"/>
+    <Image Source="avares://telemetry-viewer/Assets/ugcs-logo-title.png"
+           Width="360" VerticalAlignment="Top"
+           Margin="0,190,0,0"/>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Margin="0,0,0,150"
+                Orientation="Vertical" Spacing="20">
+      <TextBlock Text="TELEMETRY VIEWER"
+                 Foreground="#76b82a"
+                 FontSize="26" FontWeight="500"
+                 FontFamily="RoadRadio"/>
+      <TextBlock Text="{Binding Status}" Foreground="WhiteSmoke" HorizontalAlignment="Center"
+                 FontSize="14"/>
+    </StackPanel>
+  </Panel>
+</Window>

@@ -1,0 +1,119 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="UGCS.TelemetryViewer.Views.TelemetryPlateControl"
+             Background="Transparent" BorderThickness="0"
+             xmlns:views="clr-namespace:UGCS.TelemetryViewer.Views">
+  <UserControl.Styles>
+    <Style Selector="Button.MoveBtn:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <Style Selector="Button#BackBtn Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-left-white.png"/>
+    </Style>
+    <Style Selector="Button#BackBtn:pressed Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-left-green.png"/>
+    </Style>
+    <Style Selector="Button#BackBtn:disabled Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-left-back.png"/>
+    </Style>
+
+    <Style Selector="Button#ForwardBtn Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-right-forward-white.png"/>
+    </Style>
+    <Style Selector="Button#ForwardBtn:pressed Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-right-forward-green.png"/>
+    </Style>
+    <Style Selector="Button#ForwardBtn:disabled Image">
+      <Setter Property="Source" Value="avares://telemetry-viewer/Assets/arrow-right-forward-black.png"/>
+    </Style>
+  </UserControl.Styles>
+  <Border CornerRadius="4" BorderThickness="2" 
+          BorderBrush="{Binding BorderBrush}"
+          Width="200" Height="200"
+          Background="{Binding BackgroundBrush}">
+    <Grid RowDefinitions="28,*" ColumnDefinitions="*">
+      
+      <Panel Grid.Column="0" Grid.Row="0">
+        
+        <StackPanel HorizontalAlignment="Left" 
+                    Orientation="Horizontal"
+                    Margin="9,6,0,0" Spacing="14">
+          
+          <Button Width="10" Height="16" Background="Transparent"
+                  Padding="0" BorderThickness="0" Classes="MoveBtn"
+                  Command="{Binding BackCommand}" Cursor="Hand"
+                  Name="BackBtn">
+            <Image/>
+          </Button>
+          
+          <Button Width="10" Height="16" Background="Transparent"
+                  Padding="0" BorderThickness="0" Classes="MoveBtn"
+                  Command="{Binding ForwardCommand}" Cursor="Hand"
+                  Name="ForwardBtn">
+            <Image/>
+          </Button>
+        
+        </StackPanel>
+
+        <views:PopupMenu HorizontalAlignment="Right"
+                         Width="28" Height="28"
+                         Margin="0,6,3,0"
+                         MenuItems="{Binding MenuItems}"/>
+        
+      </Panel>
+      
+      <Panel Grid.Column="0" Grid.Row="1">
+        
+        <!--name-->
+        <TextBox IsReadOnly="True" Background="Transparent" Padding="0,-3,0,0"
+                 CaretBrush="Transparent" Text="{Binding PlateName}"
+                 BorderThickness="0" HorizontalAlignment="Center"
+                 VerticalAlignment="Top" Height="20"
+                 FontSize="16" Foreground="#f5f9fc"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+        
+        <!--value-->
+        <TextBox IsReadOnly="True" Background="Transparent" Padding="0,-10,0,0"
+                 CaretBrush="Transparent" Text="{Binding ValueText}"
+                 BorderThickness="0" HorizontalAlignment="Center"
+                 VerticalAlignment="Center" Height="40"
+                 FontSize="40" Foreground="{Binding ValueBrush}"
+                 FontWeight="600" Margin="0,-25,0,0"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+
+        <!--units-->
+        <TextBox IsReadOnly="True" Background="Transparent" Padding="0,0,0,0"
+                 CaretBrush="Transparent" Text="{Binding Units}"
+                 BorderThickness="0" HorizontalAlignment="Center"
+                 VerticalAlignment="Center" Height="16"
+                 FontSize="12" Foreground="#f5f9fc"
+                 FontWeight="Bold" Margin="0,20,0,0"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+
+        <!--min-->
+        <TextBox IsReadOnly="True" Background="Transparent" Padding="0"
+                 CaretBrush="Transparent" Text="{Binding MinThresholdText}"
+                 BorderThickness="0" HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom" Height="16"
+                 FontSize="12" Foreground="{Binding MinThresholdBrush}"
+                 Margin="6" FontWeight="{Binding MinThresholdWeight}"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+
+        <!--max-->
+        <TextBox IsReadOnly="True" Background="Transparent" Padding="0"
+                 CaretBrush="Transparent" Text="{Binding MaxThresholdText}"
+                 BorderThickness="0" HorizontalAlignment="Right"
+                 VerticalAlignment="Bottom" Height="16"
+                 FontSize="12" Foreground="{Binding MaxThresholdBrush}"
+                 Margin="6" FontWeight="{Binding MaxThresholdWeight}"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                 
+      </Panel>
+    
+    </Grid>
+  </Border>
+</UserControl>
