@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Xml;
 using UGCS.SsdpDiscoveryService;
 using UGCS.TelemetryViewer.Services;
@@ -100,6 +101,8 @@ namespace UGCS.TelemetryViewer
                 return;
             }
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             _log.Info($"Telemetry viewer {Version} started.");
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -109,6 +112,11 @@ namespace UGCS.TelemetryViewer
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            _log.Error("Unhandled error occured.", e.ExceptionObject as Exception);
         }
 
         private static void initLog(string logsDirectory)
