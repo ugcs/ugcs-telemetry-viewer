@@ -51,6 +51,7 @@ namespace UGCS.TelemetryViewer.Services
         }
 
         private readonly string _path;
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(typeof(StorageService));
         private readonly ITelemetryPlateFactory _telemetryPlateFactory;
 
         public StorageService(IOptions<Options> options, ITelemetryPlateFactory telemetryPlateFactory)
@@ -80,21 +81,25 @@ namespace UGCS.TelemetryViewer.Services
                 {
                     vehiclePlatesMap = new Dictionary<int, AvaloniaList<ITelemetryPlate>>()
                 };
-                foreach (var kvp in loadedValue.PlateData)
+
+                if (loadedValue.PlateData != null)
                 {
-                    AvaloniaList<ITelemetryPlate> list = new AvaloniaList<ITelemetryPlate>();
-                    foreach (var plateData in kvp.Value)
+                    foreach (var kvp in loadedValue.PlateData)
                     {
-                        ITelemetryPlate plate = _telemetryPlateFactory.Create(
-                            plateData.PlateName,
-                            plateData.TelemetryCodeKey,
-                            plateData.Units,
-                            plateData.MinThreshold,
-                            plateData.MaxThreshold,
-                            plateData.DecimalPlaces);
-                        list.Add(plate);
+                        AvaloniaList<ITelemetryPlate> list = new AvaloniaList<ITelemetryPlate>();
+                        foreach (var plateData in kvp.Value)
+                        {
+                            ITelemetryPlate plate = _telemetryPlateFactory.Create(
+                                plateData.PlateName,
+                                plateData.TelemetryCodeKey,
+                                plateData.Units,
+                                plateData.MinThreshold,
+                                plateData.MaxThreshold,
+                                plateData.DecimalPlaces);
+                            list.Add(plate);
+                        }
+                        context.vehiclePlatesMap.Add(kvp.Key, list);
                     }
-                    context.vehiclePlatesMap.Add(kvp.Key, list);
                 }
 
                 context.mainWindowWidth = loadedValue.MainWindowWidth;
@@ -103,6 +108,12 @@ namespace UGCS.TelemetryViewer.Services
                 context.mainWindowPosition = new Avalonia.PixelPoint(loadedValue.MainWindowPosX, loadedValue.MainWindowPosY);
 
                 appContext = context;
+            }
+            catch (Exception err)
+            {
+                _log.Error("Error occured during loading the app context.", err);
+                appContext = null;
+                return false;
             }
             finally
             {
