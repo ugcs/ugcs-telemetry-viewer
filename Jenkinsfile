@@ -111,7 +111,7 @@ def notifyBuild(String buildStatus) {
 	bitbucketStatusNotify(buildState: buildStatus)
 	emailext(
 		subject: subject, mimeType: 'text/html', body: details,
-		to: 'ugcs_dev_telemetry_viewer@googlegroups.com'
+		to: 'ugcs_dev_telemetry_viewer@ugcs.com'
 	)
 }
 
