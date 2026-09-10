@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using UGCS.Sdk.Protocol.Encoding;
+using Com.Ugcs.Ucs.Proto;
 using UGCS.UcsServices;
 
 namespace UGCS.TelemetryViewer.Helpers
@@ -9,12 +9,12 @@ namespace UGCS.TelemetryViewer.Helpers
     {
         private static readonly Semantic[] DEGREE_VALUES =
         {
-            Semantic.S_HEADING,
-            Semantic.S_ROLL,
-            Semantic.S_PITCH,
-            Semantic.S_YAW,
-            Semantic.S_LATITUDE,
-            Semantic.S_LONGITUDE
+            Semantic.SHeading,
+            Semantic.SRoll,
+            Semantic.SPitch,
+            Semantic.SYaw,
+            Semantic.SLatitude,
+            Semantic.SLongitude
         };
 
         public static double? Convert(TelemetryKey key, double? value)
@@ -29,7 +29,7 @@ namespace UGCS.TelemetryViewer.Helpers
                 return value;
 
             // We have a semantic, check if it is to be coverted to degrees
-            if (field.SemanticSpecified && DEGREE_VALUES.Contains(field.Semantic))
+            if (field.HasSemantic && DEGREE_VALUES.Contains(field.Semantic))
             {
                 return value.Value / Math.PI * 180.0;
             }

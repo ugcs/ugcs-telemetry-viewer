@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Com.Ugcs.Ucs.Proto;
+using System;
 using System.Collections.Generic;
-using UGCS.Sdk.Protocol.Encoding;
 
 namespace UGCS.UcsServices
 {
@@ -12,18 +12,18 @@ namespace UGCS.UcsServices
         {
             switch (subsystem)
             {
-                case Subsystem.S_CONTROL_SERVER: return "[srv]";
-                case Subsystem.S_FLIGHT_CONTROLLER: return "[f]";
-                case Subsystem.S_GIMBAL: return "[g]";
-                case Subsystem.S_CAMERA: return "[cam]";
-                case Subsystem.S_ADSB_TRANSPONDER: return "[a-t]";
-                case Subsystem.S_WINCH: return "[w]";
-                case Subsystem.S_HANGAR: return "[h]";
-                case Subsystem.S_USER: return "[u]";
-                case Subsystem.S_GPR: return "[gpr]";
-                case Subsystem.S_ADSB_RECEIVER: return "[a-r]";
-                case Subsystem.S_ADSB_VEHICLE: return "[a-v]";
-                case Subsystem.S_WEATHER_STATION: return "[ws]";
+                case Subsystem.SControlServer: return "[srv]";
+                case Subsystem.SFlightController: return "[f]";
+                case Subsystem.SGimbal: return "[g]";
+                case Subsystem.SCamera: return "[cam]";
+                case Subsystem.SAdsbTransponder: return "[a-t]";
+                case Subsystem.SWinch: return "[w]";
+                case Subsystem.SHangar: return "[h]";
+                case Subsystem.SUser: return "[u]";
+                case Subsystem.SGpr: return "[gpr]";
+                case Subsystem.SAdsbReceiver: return "[a-r]";
+                case Subsystem.SAdsbVehicle: return "[a-v]";
+                case Subsystem.SWeatherStation: return "[ws]";
                 default: return "[-]";
             }
         }
@@ -72,8 +72,8 @@ namespace UGCS.UcsServices
 
         private static readonly Dictionary<TelemetryKey, TelemetryField> TelemetryFields = new Dictionary<TelemetryKey, TelemetryField>();
 
-        public static readonly TelemetryKey UPLINK_ACTIVE = new TelemetryKey(Subsystem.S_FLIGHT_CONTROLLER, "uplink_present");
-        public static readonly TelemetryKey DOWNLINK_ACTIVE = new TelemetryKey(Subsystem.S_FLIGHT_CONTROLLER, "downlink_present");
+        public static readonly TelemetryKey UPLINK_ACTIVE = new TelemetryKey(Subsystem.SFlightController, "uplink_present");
+        public static readonly TelemetryKey DOWNLINK_ACTIVE = new TelemetryKey(Subsystem.SFlightController, "downlink_present");
 
         private static TelemetryKey? getIndex(TelemetryField telemetryField)
         {

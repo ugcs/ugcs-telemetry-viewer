@@ -4,10 +4,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UGCS.Sdk.Protocol;
-using UGCS.Sdk.Protocol.Encoding;
 using UGCS.UcsServices.DTO;
 using UGCS.UcsServices.Enums;
+using Com.Ugcs.Ucs.Proto;
 
 namespace UGCS.UcsServices
 {
@@ -95,7 +94,7 @@ namespace UGCS.UcsServices
             request.RefreshExcludes.Add("Mission");
             request.RefreshExcludes.Add("Platform");
 
-            var response = _connectionService.Execute<GetObjectListResponse>(request);
+            var response = _connectionService.Execute<GetObjectListRequest, GetObjectListResponse>(request);
 
             foreach (var vehicles in response.Objects)
             {
@@ -147,7 +146,7 @@ namespace UGCS.UcsServices
                 ObjectModificationSubscription = missionPrefSubscription
             };
 
-            var response = _connectionService.Execute<SubscribeEventResponse>(
+            var response = _connectionService.Execute<SubscribeEventRequest, SubscribeEventResponse>(
                 new SubscribeEventRequest()
                 {
                     ClientId = _connectionService.GetClientId(),
@@ -195,7 +194,7 @@ namespace UGCS.UcsServices
                 ClientId = _connectionService.GetClientId(),
                 Mission = null,
             };
-            var getMissionResp = _connectionService.Execute<GetMissionPreferencesResponse>(getMissionReq);
+            var getMissionResp = _connectionService.Execute<GetMissionPreferencesRequest, GetMissionPreferencesResponse>(getMissionReq);
 
             MissionPreference pref = getMissionResp.Preferences.FirstOrDefault(p => p.Name == PREF_NAME);
             int? id = missionPreferenceToVehicleId(pref, getMissionReq.User.Id);
@@ -237,7 +236,7 @@ namespace UGCS.UcsServices
 
         private Vehicle getVehicleById(int id)
         {
-            var getVehicleResp = _connectionService.Execute<GetObjectResponse>(
+            var getVehicleResp = _connectionService.Execute<GetObjectRequest, GetObjectResponse>(
                 new GetObjectRequest
                 {
                     ClientId = _connectionService.GetClientId(),

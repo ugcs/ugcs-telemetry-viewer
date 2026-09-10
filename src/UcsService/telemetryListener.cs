@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Com.Ugcs.Ucs.Proto;
+using System;
 using System.Collections.Generic;
-using UGCS.Sdk.Protocol;
-using UGCS.Sdk.Protocol.Encoding;
 using UGCS.UcsServices.DTO;
 
 namespace UGCS.UcsServices
@@ -10,7 +9,7 @@ namespace UGCS.UcsServices
     {
         private static readonly Dictionary<int, Dictionary<TelemetryKey, TelemetryValue>> _latestValues = new Dictionary<int, Dictionary<TelemetryKey, TelemetryValue>>(); //by vehicle Id
         private const int POLLING_INTERVAL = 100;
-        public delegate void TelemetryBatchSubscriptionCallback(List<VehicleTelemetry> telemetry);
+        public delegate void TelemetryBatchSubscriptionCallback(IList<VehicleTelemetry> telemetry);
         private readonly ConnectionService _connectionService;
         private readonly EventSubscriptionWrapper _eventSubscriptionWrapper;
         private Action<int, TelemetryKey, TelemetryValue> _tlmCallBack;
@@ -25,8 +24,7 @@ namespace UGCS.UcsServices
             _tlmCallBack = cb;
             _eventSubscriptionWrapper.TelemetryBatchSubscription = new TelemetryBatchSubscription()
             {
-                PollingPeriodMilliseconds = POLLING_INTERVAL,
-                PollingPeriodMillisecondsSpecified = true
+                PollingPeriodMilliseconds = POLLING_INTERVAL
             };
 
             SubscribeEventRequest requestEvent = new SubscribeEventRequest
@@ -35,7 +33,7 @@ namespace UGCS.UcsServices
 
                 Subscription = _eventSubscriptionWrapper
             };
-            var responce = _connectionService.Submit<SubscribeEventResponse>(requestEvent);
+            var responce = _connectionService.Submit<SubscribeEventRequest, SubscribeEventResponse>(requestEvent);
             if (responce.Exception != null)
             {
                 throw responce.Exception;
@@ -81,7 +79,7 @@ namespace UGCS.UcsServices
         /// </summary>
         /// <param name="vehicleId">vehicle id</param>
         /// <param name="telemetry">list with telemetry values telemetry</param>
-        private void onTelemetryBatchReceived(List<VehicleTelemetry> listOfTelemetry)
+        private void onTelemetryBatchReceived(IList<VehicleTelemetry> listOfTelemetry)
         {
             for (int k = 0; k < listOfTelemetry.Count; k++)
             {

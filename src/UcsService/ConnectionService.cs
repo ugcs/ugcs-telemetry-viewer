@@ -1,10 +1,9 @@
-using ProtoBuf;
+using Google.Protobuf;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using UGCS.Sdk.Protocol;
-using UGCS.Sdk.Protocol.Encoding;
+using Com.Ugcs.Ucs.Proto;
 using UGCS.Sdk.Tasks;
 
 namespace UGCS.UcsServices
@@ -60,16 +59,17 @@ namespace UGCS.UcsServices
             _tcpClient = new TcpClient();
         }
 
-        public MessageFuture<T> Submit<T>(
-                IExtensible message,
+        public MessageFuture<TResponse> Submit<TRequest, TResponse>(
+                IMessage<TRequest> message,
                 Action<FutureResult> callback = null,
                 Action<OperationStatus> statusCallback = null,
                 InputStreamCallback inputStreamCallback = null)
-            where T : IExtensible
+            where TRequest : IMessage<TRequest>
+            where TResponse : IMessage<TResponse>
         {
             if (!IsConnected)
                 throw new InvalidOperationException("Connection with ucs not established.");
-            return _messageExecutor.Submit<T>(message, callback, statusCallback, inputStreamCallback);
+            return _messageExecutor.Submit<TRequest, TResponse>(message, callback, statusCallback, inputStreamCallback);
         }
 
         public void Dispose()
@@ -169,10 +169,11 @@ namespace UGCS.UcsServices
             return client.Session;
         }
 
-        public TResponse Execute<TResponse>(IExtensible request)
-            where TResponse : IExtensible
+        public TResponse Execute<TRequest, TResponse>(TRequest request)
+            where TRequest : IMessage<TRequest>
+            where TResponse : IMessage<TResponse>
         {
-            var execution = _messageExecutor.Submit<TResponse>(request);
+            var execution = _messageExecutor.Submit<TRequest, TResponse>(request);
             execution.Wait();
 
             if (execution.Exception != null)
@@ -190,7 +191,7 @@ namespace UGCS.UcsServices
             try
             {
                 return
-                    Execute<AuthorizeHciResponse>(
+                    Execute<AuthorizeHciRequest, AuthorizeHciResponse>(
                         new AuthorizeHciRequest()
                         {
                             ClientId = -1,
@@ -212,7 +213,7 @@ namespace UGCS.UcsServices
             LoginResponse auth;
             try
             {
-                auth = Execute<LoginResponse>(
+                auth = Execute<LoginRequest, LoginResponse>(
                     new LoginRequest()
                     {
                         ClientId = clientId,
@@ -256,7 +257,7 @@ namespace UGCS.UcsServices
 
             if (_clientId != null)
             {
-                Execute<LogoutResponse>(
+                Execute<LogoutRequest, LogoutResponse>(
                     new LogoutRequest
                     {
                         ClientId = _clientId.Value,
@@ -300,7 +301,7 @@ namespace UGCS.UcsServices
                 ClientId = GetClientId(),
                 SubscriptionId = subscriptionId,
             };
-            Submit<UnsubscribeEventResponse>(request,
+            Submit<UnsubscribeEventRequest, UnsubscribeEventResponse>(request,
                 futureResult =>
                 {
                     if (futureResult.Exception != null)
