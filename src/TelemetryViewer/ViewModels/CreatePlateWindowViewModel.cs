@@ -2,7 +2,7 @@
 using ReactiveUI;
 using System;
 using System.Linq;
-using UGCS.Sdk.Protocol.Encoding;
+using Com.Ugcs.Ucs.Proto;
 using UGCS.TelemetryViewer.Helpers;
 using UGCS.TelemetryViewer.ViewModels.Auxiliary;
 using UGCS.TelemetryViewer.ViewModels.Intrerfaces;
@@ -15,18 +15,18 @@ namespace UGCS.TelemetryViewer.ViewModels
 
         private static readonly Semantic[] NON_NUMERIC_SEMANTIC =
             {
-            Semantic.S_GPS_FIX_TYPE,
-            Semantic.S_CONTROL_MODE,
-            Semantic.S_ADSB_MODE,
-            Semantic.S_BOOL,
-            Semantic.S_STRING,
-            Semantic.S_ENUM,
-            Semantic.S_FLIGHT_MODE,
-            Semantic.S_LIST,
-            Semantic.S_AUTOPILOT_STATUS,
-            Semantic.S_ICAO,
-            Semantic.S_SQUAWK,
-            Semantic.S_ANY,
+            Semantic.SGpsFixType,
+            Semantic.SControlMode,
+            Semantic.SAdsbMode,
+            Semantic.SBool,
+            Semantic.SString,
+            Semantic.SEnum,
+            Semantic.SFlightMode,
+            Semantic.SList,
+            Semantic.SAutopilotStatus,
+            Semantic.SIcao,
+            Semantic.SSquawk,
+            Semantic.SAny,
             };
 
         private bool _correctInput;

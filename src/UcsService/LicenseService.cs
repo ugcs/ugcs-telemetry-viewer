@@ -1,4 +1,4 @@
-﻿using UGCS.Sdk.Protocol.Encoding;
+﻿using Com.Ugcs.Ucs.Proto;
 
 namespace UGCS.UcsServices
 {
@@ -18,7 +18,7 @@ namespace UGCS.UcsServices
                 ClientId = _connectionService.GetClientId()
             };
 
-            GetLicenseResponse response = _connectionService.Execute<GetLicenseResponse>(request);
+            GetLicenseResponse response = _connectionService.Execute<GetLicenseRequest, GetLicenseResponse>(request);
             return response.LicensePermissions.UgcsVideoPlayer;
         }
     }

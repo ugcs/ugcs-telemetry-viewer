@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UGCS.Sdk.Protocol;
-using UGCS.Sdk.Protocol.Encoding;
+using Com.Ugcs.Ucs.Proto;
 using UGCS.UcsServices.DTO;
 using UGCS.UcsServices.Enums;
 
@@ -9,26 +8,11 @@ namespace UGCS.UcsServices
 {
     public sealed class VehicleListener
     {
-        public delegate void ObjectChangeSubscriptionCallback<in T>(Sdk.Protocol.Encoding.ModificationType modification, int id, T obj) where T : IIdentifiable;
-
         private readonly EventSubscriptionWrapper _eventSubscriptionWrapper;
         private readonly ConnectionService _connectionService;
         private readonly log4net.ILog logger = log4net.LogManager.GetLogger(typeof(VehicleListener));
 
         private readonly List<SubscriptionToken> tokens = new List<SubscriptionToken>();
-
-        private NotificationHandler getObjectNotificationHandler<T>(ObjectChangeSubscriptionCallback<T> callback) where T : class, IIdentifiable
-        {
-            string invariantName = InvariantNames.GetInvariantName<T>();
-            return notification =>
-            {
-                ObjectModificationEvent @event = notification.Event.ObjectModificationEvent;
-
-                callback(@event.ModificationType, @event.ObjectId,
-                    @event.ModificationType == Sdk.Protocol.Encoding.ModificationType.MT_DELETE ?
-                        null : (T)@event.Object.Get(invariantName));
-            };
-        }
 
         public VehicleListener(ConnectionService cs)
         {
@@ -52,7 +36,7 @@ namespace UGCS.UcsServices
                 Subscription = _eventSubscriptionWrapper
             };
 
-            var responce = _connectionService.Submit<SubscribeEventResponse>(requestEvent);
+            var responce = _connectionService.Submit<SubscribeEventRequest, SubscribeEventResponse>(requestEvent);
             if (responce.Exception != null)
             {
                 logger.Error(responce.Exception);
@@ -60,28 +44,32 @@ namespace UGCS.UcsServices
             }
             var subscribeEventResponse = responce.Value;
 
-            SubscriptionToken st = new SubscriptionToken(subscribeEventResponse.SubscriptionId, getObjectNotificationHandler<Vehicle>(
-                (token, vehicleId, vehicle) =>
+            NotificationHandler handler = notification =>
+            {
+                ObjectModificationEvent @event = notification.Event.ObjectModificationEvent;
+
+                if (@event.ModificationType == Com.Ugcs.Ucs.Proto.ModificationType.MtUpdate || @event.ModificationType == Com.Ugcs.Ucs.Proto.ModificationType.MtCreate)
                 {
-                    if (token == Sdk.Protocol.Encoding.ModificationType.MT_UPDATE || token == Sdk.Protocol.Encoding.ModificationType.MT_CREATE)
+                    Vehicle vehicle = @event.Object.Vehicle;
+                    var newCvd = new ClientVehicleDto()
                     {
-                        var newCvd = new ClientVehicleDto()
-                        {
-                            VehicleId = vehicle.Id,
-                            Name = vehicle.Name
-                        };
-                        messageReceived(callBack, newCvd, Enums.ModificationType.UPDATED);
-                    }
-                    else
+                        VehicleId = vehicle.Id,
+                        Name = vehicle.Name
+                    };
+                    messageReceived(callBack, newCvd, Enums.ModificationType.UPDATED);
+                }
+                else
+                {
+                    var newCvd = new ClientVehicleDto()
                     {
-                        var newCvd = new ClientVehicleDto()
-                        {
-                            VehicleId = vehicleId,
-                            Name = string.Empty
-                        };
-                        messageReceived(callBack, newCvd, Enums.ModificationType.DELETED);
-                    }
-                }), _eventSubscriptionWrapper);
+                        VehicleId = @event.ObjectId,
+                        Name = string.Empty
+                    };
+                    messageReceived(callBack, newCvd, Enums.ModificationType.DELETED);
+                }
+            };
+
+            SubscriptionToken st = new SubscriptionToken(subscribeEventResponse.SubscriptionId, handler, _eventSubscriptionWrapper);
             _connectionService.NotificationListener.AddSubscription(st);
             tokens.Add(st);
         }

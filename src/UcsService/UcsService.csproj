@@ -12,9 +12,8 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="protobuf-net" Version="2.4.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="ugcs-dotnet-sdk" Version="4.0.0.2" />
+    <PackageReference Include="log4net" Version="3.4.0" />
+    <PackageReference Include="ugcs-dotnet-sdk" Version="5.17.0" />
   </ItemGroup>
 
 </Project>
